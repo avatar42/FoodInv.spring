@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: common_header(~{::title},~{},~{})">
+<title th:text="#{edit.edit} + ' ' + #{class.Inv}"></title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+	<div th:replace="fragments/header :: header">&nbsp;</div>
+	<div class="wrapper flex-grow-1">
+
+		<form class="form-narrow form-horizontal" method="post"
+			th:action="@{/invs/save}" th:object="${invForm}"
+			th:fragment="invForm">
+			<!--/* Show general error messages when form contains errors */-->
+			<th:block th:if="${#fields.hasErrors('${invForm.*}')}">
+				<div th:each="fieldErrors : ${#fields.errors('${invForm.*}')}">
+					<div th:each="message : ${fieldErrors.split(';')}">
+						<div
+							th:replace="fragments/alert :: alert (type='danger', message=${message})">Alert</div>
+					</div>
+				</div>
+			</th:block>
+			<fieldset>
+				<legend th:unless="${invForm.id > 0}"
+					th:text="#{edit.new} + ' ' + #{class.Inv}"></legend>
+				<legend th:if="${invForm.id > 0}"
+					th:text="#{edit.edit} + ' ' + #{class.Inv}"></legend>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('avgeaten')}? 'has-error'">
+					<label for="avgeaten" class="col-lg-2 control-label"
+						th:text="#{Inv.avgeaten} + ':'"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="avgeaten"
+							th:field="*{avgeaten}" />
+						<ul class="help-block"
+							th:each="error: ${#fields.errors('avgeaten')}">
+							<li th:each="message : ${error.split(';')}">
+								<p class="error-message" th:text="${message}"></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('avgorder')}? 'has-error'">
+					<label for="avgorder" class="col-lg-2 control-label"
+						th:text="#{Inv.avgorder} + ':'"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="avgorder"
+							th:field="*{avgorder}" />
+						<ul class="help-block"
+							th:each="error: ${#fields.errors('avgorder')}">
+							<li th:each="message : ${error.split(';')}">
+								<p class="error-message" th:text="${message}"></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('comment')}? 'has-error'">
+					<label for="comment" class="col-lg-2 control-label"
+						th:text="#{Inv.comment} + ':'"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="comment"
+							th:field="*{comment}" />
+						<ul class="help-block"
+							th:each="error: ${#fields.errors('comment')}">
+							<li th:each="message : ${error.split(';')}">
+								<p class="error-message" th:text="${message}"></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('getalacart')}? 'has-error'">
+					<label for="getalacart" class="col-lg-2 control-label"
+						th:text="#{Inv.getalacart} + ':'"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="getalacart"
+							th:field="*{getalacart}" />
+						<ul class="help-block"
+							th:each="error: ${#fields.errors('getalacart')}">
+							<li th:each="message : ${error.split(';')}">
+								<p class="error-message" th:text="${message}"></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('have')}? 'has-error'">
+					<label for="have" class="col-lg-2 control-label"
+						th:text="#{Inv.have} + ':'"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="have"
+							th:field="*{have}" />
+						<ul class="help-block"
+							th:each="error: ${#fields.errors('have')}">
+							<li th:each="message : ${error.split(';')}">
+								<p class="error-message" th:text="${message}"></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<input type="hidden" class="form-control" id="id" th:field="*{id}" />
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('item')}? 'has-error'">
+					<label for="item" class="col-lg-2 control-label"
+						th:text="#{Inv.item} + ':'"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="item"
+							th:field="*{item}" />
+						<ul class="help-block"
+							th:each="error: ${#fields.errors('item')}">
+							<li th:each="message : ${error.split(';')}">
+								<p class="error-message" th:text="${message}"></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('lowinvadj')}? 'has-error'">
+					<label for="lowinvadj" class="col-lg-2 control-label"
+						th:text="#{Inv.lowinvadj} + ':'"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="lowinvadj"
+							th:field="*{lowinvadj}" />
+						<ul class="help-block"
+							th:each="error: ${#fields.errors('lowinvadj')}">
+							<li th:each="message : ${error.split(';')}">
+								<p class="error-message" th:text="${message}"></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('max')}? 'has-error'">
+					<label for="max" class="col-lg-2 control-label"
+						th:text="#{Inv.max} + ':'"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="max"
+							th:field="*{max}" />
+						<ul class="help-block"
+							th:each="error: ${#fields.errors('max')}">
+							<li th:each="message : ${error.split(';')}">
+								<p class="error-message" th:text="${message}"></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('meal')}? 'has-error'">
+					<label for="meal" class="col-lg-2 control-label"
+						th:text="#{Inv.meal} + ':'"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="meal"
+							th:field="*{meal}" />
+						<ul class="help-block"
+							th:each="error: ${#fields.errors('meal')}">
+							<li th:each="message : ${error.split(';')}">
+								<p class="error-message" th:text="${message}"></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('need')}? 'has-error'">
+					<label for="need" class="col-lg-2 control-label"
+						th:text="#{Inv.need} + ':'"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="need"
+							th:field="*{need}" />
+						<ul class="help-block"
+							th:each="error: ${#fields.errors('need')}">
+							<li th:each="message : ${error.split(';')}">
+								<p class="error-message" th:text="${message}"></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('old')}? 'has-error'">
+					<label for="old" class="col-lg-2 control-label"
+						th:text="#{Inv.old} + ':'"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="old"
+							th:field="*{old}" />
+						<ul class="help-block"
+							th:each="error: ${#fields.errors('old')}">
+							<li th:each="message : ${error.split(';')}">
+								<p class="error-message" th:text="${message}"></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('rate')}? 'has-error'">
+					<label for="rate" class="col-lg-2 control-label"
+						th:text="#{Inv.rate} + ':'"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="rate"
+							th:field="*{rate}" />
+						<ul class="help-block"
+							th:each="error: ${#fields.errors('rate')}">
+							<li th:each="message : ${error.split(';')}">
+								<p class="error-message" th:text="${message}"></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('subbed')}? 'has-error'">
+					<label for="subbed" class="col-lg-2 control-label"
+						th:text="#{Inv.subbed} + ':'"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="subbed"
+							th:field="*{subbed}" />
+						<ul class="help-block"
+							th:each="error: ${#fields.errors('subbed')}">
+							<li th:each="message : ${error.split(';')}">
+								<p class="error-message" th:text="${message}"></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('tossed')}? 'has-error'">
+					<label for="tossed" class="col-lg-2 control-label"
+						th:text="#{Inv.tossed} + ':'"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="tossed"
+							th:field="*{tossed}" />
+						<ul class="help-block"
+							th:each="error: ${#fields.errors('tossed')}">
+							<li th:each="message : ${error.split(';')}">
+								<p class="error-message" th:text="${message}"></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('total')}? 'has-error'">
+					<label for="total" class="col-lg-2 control-label"
+						th:text="#{Inv.total} + ':'"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="total"
+							th:field="*{total}" />
+						<ul class="help-block"
+							th:each="error: ${#fields.errors('total')}">
+							<li th:each="message : ${error.split(';')}">
+								<p class="error-message" th:text="${message}"></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('upc')}? 'has-error'">
+					<label for="upc" class="col-lg-2 control-label"
+						th:text="#{Inv.upc} + ':'"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="upc"
+							th:field="*{upc}" />
+						<ul class="help-block"
+							th:each="error: ${#fields.errors('upc')}">
+							<li th:each="message : ${error.split(';')}">
+								<p class="error-message" th:text="${message}"></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('want')}? 'has-error'">
+					<label for="want" class="col-lg-2 control-label"
+						th:text="#{Inv.want} + ':'"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="want"
+							th:field="*{want}" />
+						<ul class="help-block"
+							th:each="error: ${#fields.errors('want')}">
+							<li th:each="message : ${error.split(';')}">
+								<p class="error-message" th:text="${message}"></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('wanted')}? 'has-error'">
+					<label for="wanted" class="col-lg-2 control-label"
+						th:text="#{Inv.wanted} + ':'"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="wanted"
+							th:field="*{wanted}" />
+						<ul class="help-block"
+							th:each="error: ${#fields.errors('wanted')}">
+							<li th:each="message : ${error.split(';')}">
+								<p class="error-message" th:text="${message}"></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-lg-offset-2 col-lg-10">
+						<button type="submit" name="action" value="save"
+							class="btn btn-default" th:text="#{edit.save}"></button>
+						<button type="submit" name="action" value="cancel" class="btn"
+							th:text="#{edit.cancel}"></button>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+
+	</div>
+	<div class="mt-auto" th:insert="fragments/footer :: footer">&copy;
+		2020 default</div>
+</body>
+</html>

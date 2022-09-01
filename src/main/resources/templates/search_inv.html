@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: common_header(~{::title},~{},~{})">
+<title th:text="#{search.advanced} + ' ' + #{class.Inv}"></title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+	<div th:replace="fragments/header :: header">&nbsp;</div>
+	<div class="wrapper flex-grow-1">
+
+		<form class="form-narrow form-horizontal" method="post"
+			th:action="@{/invs/search}" 
+			th:object="${invSearchForm}"
+			th:fragment="invSearchForm">
+			<!--/* Show general error messages when form contains errors */-->
+			<th:block th:if="${#fields.hasErrors('${invSearchForm.*}')}">
+				<div 
+					th:each="fieldErrors : ${#fields.errors('${invSearchForm.*}')}">
+					<div th:each="message : ${fieldErrors.split(';')}">
+						<div
+							th:replace="fragments/alert :: alert (type='danger', message=${message})">Alert</div>
+					</div>
+				</div>
+			</th:block>
+			<fieldset>
+				<legend th:text="#{search.advanced} + ' ' + #{class.Inv}"></legend>
+
+				<div class="form-group">
+					<label for="invSearchForm.doOr"
+						th:text="#{search.doOr} + ' ' + #{search.like}">Select
+						type</label> <select class="form-control selectpicker" th:field="*{doOr}"
+						id="invSearchForm.doOr">
+						<option
+							th:each="doOr : ${T(com.dea42.foodInv.search.SearchType).values()}"
+							th:value="${doOr}" th:text="${doOr}"></option>
+					</select>
+				</div>
+
+<!-- info=ColInfo(fNum=19, colName=AvgEaten, msgKey=Inv.avgeaten, vName=avgeaten, type=BigDecimal, jtype=null, stype=8, gsName=Avgeaten, length=0, pk=false, defaultVal=null, constraint=null, required=false, list=false, jsonIgnore=false, unique=false, hidden=false, password=false, email=false, created=false, lastMod=false, adminOnly=false, foreignTable=null, foreignCol=null, colScale=0, colPrecision=22, comment=null) -->
+				<div class="form-group">
+					<label for="avgeatenMin" class="col-lg-2 control-label"
+						th:text="#{Inv.avgeaten} + ' ' + #{search.gte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="avgeatenMin"
+							th:field="*{avgeatenMin}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="avgeatenMax" class="col-lg-2 control-label"
+						th:text="#{Inv.avgeaten} + ' ' + #{search.lte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="avgeatenMax"
+							th:field="*{avgeatenMax}" />
+					</div>
+				</div>
+
+<!-- info=ColInfo(fNum=17, colName=AvgOrder, msgKey=Inv.avgorder, vName=avgorder, type=BigDecimal, jtype=null, stype=8, gsName=Avgorder, length=0, pk=false, defaultVal=null, constraint=null, required=false, list=false, jsonIgnore=false, unique=false, hidden=false, password=false, email=false, created=false, lastMod=false, adminOnly=false, foreignTable=null, foreignCol=null, colScale=0, colPrecision=22, comment=null) -->
+				<div class="form-group">
+					<label for="avgorderMin" class="col-lg-2 control-label"
+						th:text="#{Inv.avgorder} + ' ' + #{search.gte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="avgorderMin"
+							th:field="*{avgorderMin}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="avgorderMax" class="col-lg-2 control-label"
+						th:text="#{Inv.avgorder} + ' ' + #{search.lte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="avgorderMax"
+							th:field="*{avgorderMax}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="comment" class="col-lg-2 control-label"
+						th:text="#{Inv.comment} + ' ' + #{search.like}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="comment"
+							th:field="*{comment}" />
+					</div>
+				</div>
+
+<!-- info=ColInfo(fNum=11, colName=GetAlacart, msgKey=Inv.getalacart, vName=getalacart, type=Integer, jtype=null, stype=4, gsName=Getalacart, length=0, pk=false, defaultVal=null, constraint=null, required=false, list=false, jsonIgnore=false, unique=false, hidden=false, password=false, email=false, created=false, lastMod=false, adminOnly=false, foreignTable=null, foreignCol=null, colScale=0, colPrecision=0, comment=null) -->
+				<div class="form-group">
+					<label for="getalacartMin" class="col-lg-2 control-label"
+						th:text="#{Inv.getalacart} + ' ' + #{search.gte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="getalacartMin"
+							th:field="*{getalacartMin}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="getalacartMax" class="col-lg-2 control-label"
+						th:text="#{Inv.getalacart} + ' ' + #{search.lte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="getalacartMax"
+							th:field="*{getalacartMax}" />
+					</div>
+				</div>
+
+<!-- info=ColInfo(fNum=7, colName=Have, msgKey=Inv.have, vName=have, type=Integer, jtype=null, stype=4, gsName=Have, length=0, pk=false, defaultVal=null, constraint=null, required=false, list=false, jsonIgnore=false, unique=false, hidden=false, password=false, email=false, created=false, lastMod=false, adminOnly=false, foreignTable=null, foreignCol=null, colScale=0, colPrecision=0, comment=null) -->
+				<div class="form-group">
+					<label for="haveMin" class="col-lg-2 control-label"
+						th:text="#{Inv.have} + ' ' + #{search.gte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="haveMin"
+							th:field="*{haveMin}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="haveMax" class="col-lg-2 control-label"
+						th:text="#{Inv.have} + ' ' + #{search.lte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="haveMax"
+							th:field="*{haveMax}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="item" class="col-lg-2 control-label"
+						th:text="#{Inv.item} + ' ' + #{search.like}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="item"
+							th:field="*{item}" />
+					</div>
+				</div>
+
+<!-- info=ColInfo(fNum=10, colName=LowInvAdj, msgKey=Inv.lowinvadj, vName=lowinvadj, type=Integer, jtype=null, stype=4, gsName=Lowinvadj, length=0, pk=false, defaultVal=null, constraint=null, required=false, list=false, jsonIgnore=false, unique=false, hidden=false, password=false, email=false, created=false, lastMod=false, adminOnly=false, foreignTable=null, foreignCol=null, colScale=0, colPrecision=0, comment=null) -->
+				<div class="form-group">
+					<label for="lowinvadjMin" class="col-lg-2 control-label"
+						th:text="#{Inv.lowinvadj} + ' ' + #{search.gte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="lowinvadjMin"
+							th:field="*{lowinvadjMin}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="lowinvadjMax" class="col-lg-2 control-label"
+						th:text="#{Inv.lowinvadj} + ' ' + #{search.lte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="lowinvadjMax"
+							th:field="*{lowinvadjMax}" />
+					</div>
+				</div>
+
+<!-- info=ColInfo(fNum=18, colName=Max, msgKey=Inv.max, vName=max, type=Integer, jtype=null, stype=4, gsName=Max, length=0, pk=false, defaultVal=null, constraint=null, required=false, list=false, jsonIgnore=false, unique=false, hidden=false, password=false, email=false, created=false, lastMod=false, adminOnly=false, foreignTable=null, foreignCol=null, colScale=0, colPrecision=0, comment=null) -->
+				<div class="form-group">
+					<label for="maxMin" class="col-lg-2 control-label"
+						th:text="#{Inv.max} + ' ' + #{search.gte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="maxMin"
+							th:field="*{maxMin}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="maxMax" class="col-lg-2 control-label"
+						th:text="#{Inv.max} + ' ' + #{search.lte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="maxMax"
+							th:field="*{maxMax}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="meal" class="col-lg-2 control-label"
+						th:text="#{Inv.meal} + ' ' + #{search.like}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="meal"
+							th:field="*{meal}" />
+					</div>
+				</div>
+
+<!-- info=ColInfo(fNum=12, colName=Need, msgKey=Inv.need, vName=need, type=Integer, jtype=null, stype=4, gsName=Need, length=0, pk=false, defaultVal=null, constraint=null, required=false, list=false, jsonIgnore=false, unique=false, hidden=false, password=false, email=false, created=false, lastMod=false, adminOnly=false, foreignTable=null, foreignCol=null, colScale=0, colPrecision=0, comment=null) -->
+				<div class="form-group">
+					<label for="needMin" class="col-lg-2 control-label"
+						th:text="#{Inv.need} + ' ' + #{search.gte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="needMin"
+							th:field="*{needMin}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="needMax" class="col-lg-2 control-label"
+						th:text="#{Inv.need} + ' ' + #{search.lte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="needMax"
+							th:field="*{needMax}" />
+					</div>
+				</div>
+
+<!-- info=ColInfo(fNum=8, colName=Old, msgKey=Inv.old, vName=old, type=Integer, jtype=null, stype=4, gsName=Old, length=0, pk=false, defaultVal=null, constraint=null, required=false, list=false, jsonIgnore=false, unique=false, hidden=false, password=false, email=false, created=false, lastMod=false, adminOnly=false, foreignTable=null, foreignCol=null, colScale=0, colPrecision=0, comment=null) -->
+				<div class="form-group">
+					<label for="oldMin" class="col-lg-2 control-label"
+						th:text="#{Inv.old} + ' ' + #{search.gte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="oldMin"
+							th:field="*{oldMin}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="oldMax" class="col-lg-2 control-label"
+						th:text="#{Inv.old} + ' ' + #{search.lte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="oldMax"
+							th:field="*{oldMax}" />
+					</div>
+				</div>
+
+<!-- info=ColInfo(fNum=3, colName=Rate, msgKey=Inv.rate, vName=rate, type=Integer, jtype=null, stype=4, gsName=Rate, length=0, pk=false, defaultVal=null, constraint=null, required=false, list=true, jsonIgnore=false, unique=false, hidden=false, password=false, email=false, created=false, lastMod=false, adminOnly=false, foreignTable=null, foreignCol=null, colScale=0, colPrecision=0, comment=null) -->
+				<div class="form-group">
+					<label for="rateMin" class="col-lg-2 control-label"
+						th:text="#{Inv.rate} + ' ' + #{search.gte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="rateMin"
+							th:field="*{rateMin}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="rateMax" class="col-lg-2 control-label"
+						th:text="#{Inv.rate} + ' ' + #{search.lte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="rateMax"
+							th:field="*{rateMax}" />
+					</div>
+				</div>
+
+<!-- info=ColInfo(fNum=14, colName=Subbed, msgKey=Inv.subbed, vName=subbed, type=Integer, jtype=null, stype=4, gsName=Subbed, length=0, pk=false, defaultVal=null, constraint=null, required=false, list=false, jsonIgnore=false, unique=false, hidden=false, password=false, email=false, created=false, lastMod=false, adminOnly=false, foreignTable=null, foreignCol=null, colScale=0, colPrecision=0, comment=null) -->
+				<div class="form-group">
+					<label for="subbedMin" class="col-lg-2 control-label"
+						th:text="#{Inv.subbed} + ' ' + #{search.gte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="subbedMin"
+							th:field="*{subbedMin}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="subbedMax" class="col-lg-2 control-label"
+						th:text="#{Inv.subbed} + ' ' + #{search.lte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="subbedMax"
+							th:field="*{subbedMax}" />
+					</div>
+				</div>
+
+<!-- info=ColInfo(fNum=16, colName=Tossed, msgKey=Inv.tossed, vName=tossed, type=Integer, jtype=null, stype=4, gsName=Tossed, length=0, pk=false, defaultVal=null, constraint=null, required=false, list=false, jsonIgnore=false, unique=false, hidden=false, password=false, email=false, created=false, lastMod=false, adminOnly=false, foreignTable=null, foreignCol=null, colScale=0, colPrecision=0, comment=null) -->
+				<div class="form-group">
+					<label for="tossedMin" class="col-lg-2 control-label"
+						th:text="#{Inv.tossed} + ' ' + #{search.gte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="tossedMin"
+							th:field="*{tossedMin}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="tossedMax" class="col-lg-2 control-label"
+						th:text="#{Inv.tossed} + ' ' + #{search.lte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="tossedMax"
+							th:field="*{tossedMax}" />
+					</div>
+				</div>
+
+<!-- info=ColInfo(fNum=9, colName=Total, msgKey=Inv.total, vName=total, type=Integer, jtype=null, stype=4, gsName=Total, length=0, pk=false, defaultVal=null, constraint=null, required=false, list=false, jsonIgnore=false, unique=false, hidden=false, password=false, email=false, created=false, lastMod=false, adminOnly=false, foreignTable=null, foreignCol=null, colScale=0, colPrecision=0, comment=null) -->
+				<div class="form-group">
+					<label for="totalMin" class="col-lg-2 control-label"
+						th:text="#{Inv.total} + ' ' + #{search.gte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="totalMin"
+							th:field="*{totalMin}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="totalMax" class="col-lg-2 control-label"
+						th:text="#{Inv.total} + ' ' + #{search.lte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="totalMax"
+							th:field="*{totalMax}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="upc" class="col-lg-2 control-label"
+						th:text="#{Inv.upc} + ' ' + #{search.like}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="upc"
+							th:field="*{upc}" />
+					</div>
+				</div>
+
+<!-- info=ColInfo(fNum=6, colName=Want, msgKey=Inv.want, vName=want, type=Integer, jtype=null, stype=4, gsName=Want, length=0, pk=false, defaultVal=null, constraint=null, required=false, list=false, jsonIgnore=false, unique=false, hidden=false, password=false, email=false, created=false, lastMod=false, adminOnly=false, foreignTable=null, foreignCol=null, colScale=0, colPrecision=0, comment=null) -->
+				<div class="form-group">
+					<label for="wantMin" class="col-lg-2 control-label"
+						th:text="#{Inv.want} + ' ' + #{search.gte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="wantMin"
+							th:field="*{wantMin}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="wantMax" class="col-lg-2 control-label"
+						th:text="#{Inv.want} + ' ' + #{search.lte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="wantMax"
+							th:field="*{wantMax}" />
+					</div>
+				</div>
+
+<!-- info=ColInfo(fNum=15, colName=Wanted, msgKey=Inv.wanted, vName=wanted, type=Integer, jtype=null, stype=4, gsName=Wanted, length=0, pk=false, defaultVal=null, constraint=null, required=false, list=false, jsonIgnore=false, unique=false, hidden=false, password=false, email=false, created=false, lastMod=false, adminOnly=false, foreignTable=null, foreignCol=null, colScale=0, colPrecision=0, comment=null) -->
+				<div class="form-group">
+					<label for="wantedMin" class="col-lg-2 control-label"
+						th:text="#{Inv.wanted} + ' ' + #{search.gte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="wantedMin"
+							th:field="*{wantedMin}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="wantedMax" class="col-lg-2 control-label"
+						th:text="#{Inv.wanted} + ' ' + #{search.lte}"></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="wantedMax"
+							th:field="*{wantedMax}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-lg-offset-2 col-lg-10">
+						<button type="submit" name="action" value="search"
+							class="btn btn-default" th:text="#{search.search}"></button>
+						<button type="submit" name="action" value="reset"
+							class="btn btn-default" th:text="#{search.reset}"></button>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+
+	</div>
+	<div class="mt-auto" th:insert="fragments/footer :: footer">&copy;
+		2020 default</div>
+</body>
+</html>

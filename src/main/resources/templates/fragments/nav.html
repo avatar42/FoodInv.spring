@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<ul class="navbar-nav mr-auto">
+		<li th:fragment="guiMenu" id="guiMenu" class="nav-item dropdown"><a
+			href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
+			aria-haspopup="true" aria-expanded="false"><span
+				th:text="#{header.gui}"></span> <b class="caret"></b> </a>
+			<ul class="dropdown-menu bg-dark">
+								<li th:classappend="${module == 'inv' ? 'active' : ''}">
+    								<a id="guiItemInv" th:href="@{/invs/list}" th:text="#{class.Inv}"></a></li>
+								<li sec:authorize="hasRole('ROLE_ADMIN')"  th:classappend="${module == 'account' ? 'active' : ''}">
+    								<a id="guiItemAccount" th:href="@{/accounts/list}" th:text="#{class.Account}"></a></li>
+								<li th:classappend="${module == 'orders' ? 'active' : ''}">
+    								<a id="guiItemOrders" th:href="@{/orderss/list}" th:text="#{class.Orders}"></a></li>
+			</ul></li>
+		<li th:fragment="restMenu" id="restMenu" class="nav-item dropdown"><a
+			href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
+			aria-haspopup="true" aria-expanded="false"><span
+				th:text="#{header.restApi}"></span> <b class="caret"></b> </a>
+			<ul class="dropdown-menu bg-dark">
+								<li th:classappend="${module == 'inv' ? 'active' : ''}">
+    								<a id="apiItemInv" th:href="@{/api/invs}" th:text="#{class.Inv}"></a></li>
+								<li sec:authorize="hasRole('ROLE_ADMIN')"  th:classappend="${module == 'account' ? 'active' : ''}">
+    								<a id="apiItemAccount" th:href="@{/api/accounts}" th:text="#{class.Account}"></a></li>
+								<li th:classappend="${module == 'orders' ? 'active' : ''}">
+    								<a id="apiItemOrders" th:href="@{/api/orderss}" th:text="#{class.Orders}"></a></li>
+			</ul></li>
+		<li th:fragment="staticMenu" id="staticMenu" class="nav-item dropdown">
+							</li>
+					</ul>
+</body>
+</html>
